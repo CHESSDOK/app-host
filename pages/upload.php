@@ -45,33 +45,35 @@ if (!$result) {
         </button>
       </div>
     </header>
-        <div id="FileUpload">
-            <form action="../php/upload.php" method="post" enctype="multipart/form-data">
-              <div class="flex-cont">
-                <div class="categ">
-                  <label for="Categ"> Category </label>
-                  <select name="Categ" id="Categ"> 
-                      <option value="English">English</option>
-                      <option value="Filipino">Filipino</option>
-                      <option value="Mathematics">Mathematics</option>
-                      <option value="Science">Science</option>
-                      <option value="Humanities">Humanities</option>
-                      <option value="Communication ">Communication </option>
-                      <option value="ICT">ICT</option>
-                  </select>
-                </div>
-                  <div class="input-box button">
-                      <input type="submit" value="Upload File" name="submit">
-                  </div>
-              </div>
+    <div id="FileUpload">
+      <form action="../php/upload.php" method="post" enctype="multipart/form-data">
+        <div class="flex-cont">
+          <div class="categ">
+            <label for="Categ"> Category </label>
+            <select name="Categ" id="Categ">
+              <option value="English">English</option>
+              <option value="Filipino">Filipino</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Science">Science</option>
+              <option value="Humanities">Humanities</option>
+              <option value="Communication">Communication</option>
+              <option value="ICT">ICT</option>
+            </select>
+          </div>
+          <div class="input-box button">
+            <input type="submit" value="Upload File" name="submit">
+          </div>
+        </div>
         <div class="wrapper">
-            <div id="drop-area" class="upload">
-                    <p>Drag files here or <label for="fileInput" class="upload__button">Browse</label></p>
-                    <input type="file" id="fileInput" name="files" />
-            </div>
-    </form>
-      </div>
+          <div id="drop-area" class="upload">
+            <p>Drag files here or <label for="fileInput" class="upload__button">Browse</label></p>
+            <input type="file" id="fileInput" name="files[]" multiple />
+            <ul id="file-list" class="file-list"></ul>
+          </div>
+        </div>
+      </form>
     </div>
+
     <div id="side-menu" class="side-menu">
         <button id="close-btn">&times;</button>
         <ul>
@@ -86,19 +88,24 @@ if (!$result) {
             <th scope="col">Name</th>
             <th scope="col">Category</th>
             <th scope="col">Size</th>
+            <th></th>
           </tr>
         </thead>
           <tbody>   
           <?php
-              while ($row = $result->fetch_assoc()) {
+             while ($row = $result->fetch_assoc()) {
               $FilesID = $row['FilesID'];
-              echo '
+              echo "
                 <tr>
-                    <td data-label="Name">' . $row["name"] . '</td>
-                    <td data-label="Category">' . $row["categ"] . '</td>
-                    <td data-label="Size">' . $row["size"] . '</td>
-                </tr>';
-              }
+                  <td data-label='Name'>" . $row['name'] . "</td>
+                  <td data-label='Category'>" . $row['categ'] . "</td>
+                  <td data-label='Size'>" . $row['size'] . "</td>
+                  <td>
+                    <a href='../php/upload.php?delete=$FilesID' class='delete-link'>Delete</a>
+                    <a href='../php/upload.php?read=$FilesID' class='read-link'>Read</a>
+                  </td>
+                </tr>";
+          }
           ?>
             </tbody>
       </div>

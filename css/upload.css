@@ -207,6 +207,16 @@ table th {
   text-transform: uppercase;
 }
 
+/* File preview list */
+.file-list {
+  list-style-type: none;
+  margin-top: -35%;
+  margin-left: -13%;
+  width: 375px;
+  color: #fff;
+
+}
+
   @media only screen and (max-width: 600px){
     /* === header Styles === */
     header {

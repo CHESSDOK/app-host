@@ -1,38 +1,74 @@
-
 <?php
-// connect to the database
-include_once "db_connection.php";
-$conn = new mysqli($servername, $username, $password, $database);
+include 'db_connection.php';
 
-// Uploads files
-if (isset($_POST['submit'])) { // if save button on the form is clicked
-    // name of the uploaded file
-    $filename = $_FILES['files']['name'];
+$uploadDir = 'uploads/'; // Define the upload directory
 
+if (isset($_POST['submit'])) {
     $categ = $_POST['Categ'];
-    // destination of the file on the server
-    $destination = 'uploads/' . $filename;
 
-    // get the file extension
-    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+    foreach ($_FILES['files']['name'] as $key => $filename) {
+        $fileTmp = $_FILES['files']['tmp_name'][$key];
+        $fileSize = $_FILES['files']['size'][$key];
+        $fileExt = pathinfo($filename, PATHINFO_EXTENSION);
+        $destination = $uploadDir . basename($filename);
 
-    // the physical file on a temporary uploads directory on the server
-    $file = $_FILES['files']['tmp_name'];
-    $size = $_FILES['files']['size'];
-
-    if (!in_array($extension, ['zip', 'pdf', 'docx'])) {
-        echo "You file extension must be .zip, .pdf or .docx";
-    } elseif ($_FILES['files']['size'] > 1000000) { // file shouldn't be larger than 1Megabyte
-        echo "File too large!";
-    } else {
-        // move the uploaded (temporary) file to the specified destination
-        if (move_uploaded_file($file, $destination)) {
-            $sql = "INSERT INTO files (name, categ, size, downloads) VALUES ('$filename', '$categ', $size, 0)";
-            if (mysqli_query($conn, $sql)) {
-                header('Location:../pages/upload.php');
-            }
+        if (!in_array($fileExt, ['zip', 'pdf', 'docx'])) {
+            echo "File extension must be .zip, .pdf, or .docx";
+        } elseif ($fileSize > 1000000) {
+            echo "File too large!";
         } else {
-            echo "Failed to upload file.";
+            if (move_uploaded_file($fileTmp, $destination)) {
+                $sql = "INSERT INTO files (name, categ, size, downloads) VALUES ('$filename', '$categ', $fileSize, 0)";
+                if ($conn->query($sql)) {
+                    echo "File uploaded successfully";
+                } else {
+                    echo "Database error: " . $conn->error;
+                }
+            } else {
+                echo "Failed to upload file.";
+            }
         }
     }
 }
+
+if (isset($_GET['delete'])) {
+    $fileId = $_GET['delete'];
+    $sql = "SELECT name FROM files WHERE FilesID = $fileId";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $file = $result->fetch_assoc();
+        $filePath = $uploadDir . $file['name'];
+        if (unlink($filePath)) {
+            $sql = "DELETE FROM files WHERE FilesID = $fileId";
+            if ($conn->query($sql)) {
+                echo "File deleted successfully";
+            } else {
+                echo "Database error: " . $conn->error;
+            }
+        } else {
+            echo "Failed to delete file.";
+        }
+    } else {
+        echo "File not found.";
+    }
+}
+
+if (isset($_GET['read'])) {
+    $fileId = $_GET['read'];
+    $sql = "SELECT name FROM files WHERE FilesID = $fileId";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $file = $result->fetch_assoc();
+        $filePath = $uploadDir . $file['name'];
+        if (file_exists($filePath)) {
+            header('Content-Type: application/pdf');
+            readfile($filePath);
+            exit;
+        } else {
+            echo "File not found.";
+        }
+    } else {
+        echo "File not found.";
+    }
+}
+?>
