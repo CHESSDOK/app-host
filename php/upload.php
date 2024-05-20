@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
             if (move_uploaded_file($fileTmp, $destination)) {
                 $sql = "INSERT INTO files (name, categ, size, downloads) VALUES ('$filename', '$categ', $fileSize, 0)";
                 if ($conn->query($sql)) {
-                    echo "File uploaded successfully";
+                    header("Location: ../pages/upload.php");
                 } else {
                     echo "Database error: " . $conn->error;
                 }
@@ -41,7 +41,7 @@ if (isset($_GET['delete'])) {
         if (unlink($filePath)) {
             $sql = "DELETE FROM files WHERE FilesID = $fileId";
             if ($conn->query($sql)) {
-                echo "File deleted successfully";
+                echo "<script>alert('File deleted.'); window.location.href = '../pages/upload.php';</script>";
             } else {
                 echo "Database error: " . $conn->error;
             }
