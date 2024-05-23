@@ -1,16 +1,17 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.html");
+    exit();
+}
+
 include_once "../php/db_connection.php";
+$eid = $_GET['eid'];
+$user_id = $_SESSION['user_id'];
 
-$eid = $_GET['eid']; // Exam ID passed as a URL parameter
-
-// Fetch exam details
-$exam_query = "SELECT * FROM exam WHERE eid='$eid'";
-$exam_result = mysqli_query($conn, $exam_query);
-$exam = mysqli_fetch_assoc($exam_result);
-
-// Fetch questions
 $questions_query = "SELECT * FROM question WHERE eid='$eid'";
 $questions_result = mysqli_query($conn, $questions_query);
+
 ?>
 
 <!DOCTYPE html>
@@ -18,35 +19,27 @@ $questions_result = mysqli_query($conn, $questions_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Take Exam - <?php echo htmlspecialchars($exam['title']); ?></title>
     <link rel="stylesheet" href="../css/exam.css">
+    <title>Take Exam</title>
 </head>
 <body>
-<div class="form-box">
-    <form class="form" action="../php/submit_answers.php" method="post">
-        <span class="title"><?php echo htmlspecialchars($exam['title']); ?></span>
+    <form class="form-box" action="../php/submit_ans.php" method="POST">
         <input type="hidden" name="eid" value="<?php echo htmlspecialchars($eid); ?>">
         <?php
-        $qnum = 1;
+        $q_number = 1;
         while ($question = mysqli_fetch_assoc($questions_result)) {
-            echo '<div class="form-container">
-                <tr>
-                    <th><p>Question ' . $qnum . ' :: ' . htmlspecialchars($question['question']) . '</p> </th>
-                </tr><tr>
-                    <td><input type="radio" name="answers[' . $question['id'] . ']" value="a" required> </td><td> ' . htmlspecialchars($question['option_a']) . '<br> </td>
-                </tr><tr>
-                    <td><input type="radio" name="answers[' . $question['id'] . ']" value="b" required> </td><td>' . htmlspecialchars($question['option_b']) . '<br> </td>
-                </tr><tr>
-                    <td><input type="radio" name="answers[' . $question['id'] . ']" value="c" required> </td><td>' . htmlspecialchars($question['option_c']) . '<br> </td>
-                </tr><tr>
-                    <td><input type="radio" name="answers[' . $question['id'] . ']" value="d" required> </td><td>' . htmlspecialchars($question['option_d']) . '<br> </td>
-                </tr>
-                </div>';
-            $qnum++;
+            echo "<div class='question'>
+                <p>Question {$q_number} :: " . htmlspecialchars($question['question']) . "</p>
+                <input type='hidden' name='questions[]' value='{$question['id']}'>
+                <label><input type='radio' name='answers[{$question['id']}]' value='a'> " . htmlspecialchars($question['option_a']) . "</label><br>
+                <label><input type='radio' name='answers[{$question['id']}]' value='b'> " . htmlspecialchars($question['option_b']) . "</label><br>
+                <label><input type='radio' name='answers[{$question['id']}]' value='c'> " . htmlspecialchars($question['option_c']) . "</label><br>
+                <label><input type='radio' name='answers[{$question['id']}]' value='d'> " . htmlspecialchars($question['option_d']) . "</label><br>
+            </div>";
+            $q_number++;
         }
         ?>
-        <button type="submit" name="submit" class="btn submit-btn">Submit</button>
+        <button  class="action" type="submit" name="submit">Submit</button>
     </form>
-</div>
 </body>
 </html>

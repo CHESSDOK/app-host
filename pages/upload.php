@@ -78,7 +78,7 @@ if (!$result) {
         <button id="close-btn">&times;</button>
         <ul>
           <li><a href="#">Profile</a></li>
-          <li><a href="home.html">home</a></li>
+          <li><a href="home.php">home</a></li>
           <li><a href="../index.html" id="logout">Logout</a></li>
         </ul>
       </div>

@@ -1,15 +1,13 @@
 <?php
+session_start();
+
 if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $pass = $_POST["pass"];
 
-    // connect with database
     include_once "db_connection.php";
-
-    // sanitize email to prevent SQL injection
     $email = mysqli_real_escape_string($conn, $email);
 
-    // check if credentials are okay, and email is verified
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 
@@ -26,7 +24,10 @@ if (isset($_POST["login"])) {
         die("<script>alert('Email is not verified.'); window.location.href = '../pages/email.php';</script>");
     }
 
-    header("Location: ../pages/home.html");
+    $_SESSION['user_id'] = $user->id;
+    $_SESSION['user_email'] = $user->email;
+
+    header("Location: ../pages/home.php");
     exit();
 }
 ?>

@@ -1,13 +1,22 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.html");
+    exit();
+}
+
+include_once "../php/db_connection.php";
+
+$user_id = $_SESSION['user_id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/home.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <title>Website Template</title>
+    <title>User Dashboard</title>
     <style>
         body {
             margin: 0;
@@ -18,12 +27,9 @@
 </head>
 <body>
     <div class="header-DB">
-        <!-- Header content -->
-        
         <div class="image-container">
             <div class="overlay"></div>
             <img src="../icons/a.jpg" alt="bg" class="image1">
-
         </div>
         <div class="header-text">
             <h1>Smart Reviewer</h1>
@@ -31,7 +37,8 @@
     </div>
 
     <div class="content-container">
-        <!-- Original content -->
+
+        <!-- Existing content with links to other pages -->
         <div id="content1" class="content">
             <div class="rowcp">
                 <div class="row">
@@ -39,29 +46,24 @@
                         <img src="../icons/R1.png" alt="i1"> <br>
                         <p>Upload Files</p>
                     </a>
-        
                     <a href="flash.html" class="col">
                         <img src="../icons/R2.png" alt="i1"> <br>
                         <p>Flashcards</p>
                     </a>
-        
                     <a href="videos.php" class="col">
                         <img src="../icons/R3.png" alt="i1"> <br>
                         <p>Videos</p><br/>
                     </a>
                 </div>
-    
                 <div class="row">
                     <a href="exams_list.php" class="col">
                         <img src="../icons/Q2.png" alt="i1"> <br>
                         <p>Exam</p>
                     </a>
-        
-                    <a href="#" class="col">
+                    <a href="progress.php" class="col">
                         <img src="../icons/Q3.png" alt="i1"> <br>
                         <p>Accuracy</p>
                     </a>
-        
                     <a href="#" class="col">
                         <img src="../icons/Q4.png" alt="i1"> <br>
                         <p>Activities</p>
@@ -69,8 +71,6 @@
                 </div>
             </div>
         </div>
-    
     </div>
-    <script src="../js/app.js"></script>
 </body>
 </html>
