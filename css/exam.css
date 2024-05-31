@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+body{
+    background: #5375E2;
+}
+p{
+  font-family: 'Poppins', sans-serif;
+  font-size: large;
+  padding: 5px;
+}
+
+
+.form-box {
+    max-width: 600px;
+    background: #f1f7fe;
+    overflow: hidden;
+    border-radius: 16px;
+    color: #010101;
+    margin: 10% auto;
+  }
+  
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px 24px;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  /*Form text*/
+  .title {
+    font-weight: bold;
+    font-size: 1.6rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  /*Inputs box*/
+  .form-container {
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #fff;
+    margin: 1rem 0 .5rem;
+    width: 100%;
+  }
+  
+  .input {
+    background: none;
+    border: 0;
+    outline: 0;
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    font-size: .9rem;
+    padding: 8px 15px;
+  }
+  
+  .form-section {
+    padding: 16px;
+    font-size: .85rem;
+    background-color: #e0ecfb;
+    box-shadow: rgb(0 0 0 / 8%) 0 -1px;
+  }
+  
+  .form-section a {
+    font-weight: bold;
+    color: #0066ff;
+    transition: color .3s ease;
+  }
+  
+  .form-section a:hover {
+    color: #005ce6;
+    text-decoration: underline;
+  }
+  
+  /*Button*/
+  .form button {
+    background-color: #0066ff;
+    color: #fff;
+    border: 0;
+    border-radius: 24px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+  }
+  
+  .form button:hover {
+    background-color: #005ce6;
+  }
+
+  .action {
+    margin-top: 24px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: royalblue;
+    color: white;
+    cursor: pointer;
+    align-self: end;
+  }
+
+  table {
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin: auto;
+    padding: 0;
+    width: 70%;
+    table-layout: fixed;
+  }
+  
+  table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+  }
+  
+  table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+  }
+  
+  table th,
+  table td {
+    padding: .625em;
+    text-align: center;
+  }
+  
+  table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  
+
+  .cont {
+    max-width: 600px;
+    background: #f1f7fe;
+    border-radius: 16px;
+    margin: 5% auto;
+  }
+   /* === header Styles === */
+   header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px; /* Adjust as needed */
+  }
+  
+  .logo img {
+    width: 100px; /* Adjust the width of the logo */
+  }
+  
+  .burger-menu button {
+    background: none;
+    border: none;
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .side-menu {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Adjust the position to be on the right */
+    width: 250px;
+    height: 100%;
+    background-color: #ffffff;
+    transition: right 0.3s ease; /* Change left to right for transition */
+    padding-top: 50px; /* Adjust padding as needed */
+  }
+  
+  .side-menu button#close-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px; /* Adjust position as needed */
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 24px;
+    cursor: pointer;
+  }
+    
+    .side-menu ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .side-menu ul li {
+      padding: 10px 0;
+    }
+    
+    .side-menu ul li a {
+      color: #000000;
+      text-decoration: none;
+      display: block;
+      padding: 10px 20px;
+    }
+    
+    .side-menu ul li a:hover {
+      background-color: #4457a6;
+    }
+    
